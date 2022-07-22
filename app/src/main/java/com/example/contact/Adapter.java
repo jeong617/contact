@@ -59,9 +59,41 @@ public class Adapter extends RecyclerView.Adapter<Adapter.Holder> {
 
                     }
                 });
-
+                builder.setPositiveButton(("문자 보내기", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Uri smsUri = Uri.parse("tel:" + contact.getPhoneNumber());
+                        Intent intent = new Intent(Intent.ACTION_VIEW, smsUri);
+                        intent.putExtra("address:", contact.getPhoneNumber());
+                        intent.putExtra("sms_body", "");
+                        intent.setType("vnd.android-dir/mms-sms");
+                        context.startActivity(intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                    }
+                });
+                builder.create().show();
             }
         });
+
+        holder.item_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setTitle("삭제");
+                builder.setMessage("이 연락처를 삭제하시겠습니까?");
+                builder.setNegativeButton("아니오.", null);
+                builder.setPositiveButton("예.", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //TODO : 핸드폰에서 연락처 지우기.
+                        datalist.remove(position);
+                        notifyItemRemoved(position);
+                        notifyItemRangeChanged(position);
+                    }
+                });
+                builder.create().show();
+            }
+        });
+
     }
 
     @Override
