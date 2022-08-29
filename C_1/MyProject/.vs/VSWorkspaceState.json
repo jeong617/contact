@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\MyProject"
   ],
-  "SelectedNode": "\\MyProject.sln",
+  "SelectedNode": "\\MyProject\\printfscanf.c",
   "PreviewInSolutionExplorer": false
 }
